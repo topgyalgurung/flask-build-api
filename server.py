@@ -101,5 +101,19 @@ def name_search():
             return(person,400)
         
     return({"message:":"Person not found"},404)
-        
 
+ # return number of items in the data        
+@app.route("/count")
+def count():
+    try:
+        return {"data count": len(data) },200
+    except NameError:
+        return {"message":"data not defined"},500
+
+@app.route("/person/<type:var_name")
+def find_by_uid(var_name):
+   
+    for person in data:
+        if person["id"]==str(var_name):
+            return person
+    return({"message":"person not found"},404)
