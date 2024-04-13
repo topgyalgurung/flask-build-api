@@ -2,6 +2,7 @@ from flask import Flask, make_response, request
 import requests
 
 app = Flask(__name__)
+# app=Flask("My First Application")
 
 data = [
     {
@@ -61,7 +62,7 @@ data = [
     }
 ]
 
-@app.route("/")
+@app.route("/") # default is GET request 
 def index():
     return "Hello world "
 
@@ -102,6 +103,7 @@ def name_search():
         
     return({"message:":"Person not found"},404)
 
+# Create a GET /count endpoint 
  # return number of items in the data        
 @app.route("/count")
 def count():
@@ -110,10 +112,33 @@ def count():
     except NameError:
         return {"message":"data not defined"},500
 
-@app.route("/person/<type:var_name")
-def find_by_uid(var_name):
+# CREATE GET /person/id endpoint
+# take argument of type uuid and return person json if found
+@app.route("/person/<uuid:id>")
+def find_by_uid(id):
    
     for person in data:
-        if person["id"]==str(var_name):
+        if person["id"]==str(id):
             return person
     return({"message":"person not found"},404)
+
+# CREATE DELETE /person/id endpoint 
+@app.route("/person/<uuid:id>",methods=['DELETE'])
+def delete_by_uuid(id):
+    for person in data:
+        if person["id"]==str(id):
+            data.remove(person)
+            return{"message":f"{id}"},200
+    return{"message":"person not found"},404
+
+# Note: problem encountered: method not allowed for requested URL 
+# 405 method not allowed error occurs when web server receives a request using HTTP method 
+# that does not support or permit the requested resource. 
+# causes: misconfigured server or web settings or incorrect code or scripts within app 
+# solution: review server configuration, check app code, inspect .htacess and rewrite rules  
+
+
+
+# if __name__=="__main__":
+#     app.run(debug=True)
+
