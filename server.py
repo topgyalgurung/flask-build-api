@@ -1,4 +1,6 @@
-from flask import Flask, make_response, request, jsonify, abort
+from flask import Flask, make_response, request, jsonify
+from flask import render_template 
+# for rendering static and dynamic HTML pages 
 
 app = Flask(__name__)
 # app=Flask("My First Application")
@@ -64,6 +66,10 @@ data = [
 @app.route("/") # default is GET request 
 def index():
     return "Hello world "
+
+@app.route('/sample')
+def getSampleHtml():
+    return render_template('sample.html')
 
 # first method send custom HTTP code with a tuple 
 @app.route("/content")
@@ -165,6 +171,6 @@ def api_not_found(e):
        return{"message":"api not found"},404
 
 
-# if __name__=="__main__":
-#     app.run(debug=True)
+if __name__=="__main__":
+    app.run(debug=True)
 
