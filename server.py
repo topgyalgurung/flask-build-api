@@ -1,5 +1,4 @@
-from flask import Flask, make_response, request
-import requests
+from flask import Flask, make_response, request, jsonify, abort
 
 app = Flask(__name__)
 # app=Flask("My First Application")
@@ -137,6 +136,33 @@ def delete_by_uuid(id):
 # causes: misconfigured server or web settings or incorrect code or scripts within app 
 # solution: review server configuration, check app code, inspect .htacess and rewrite rules  
 
+# POST Request
+# create a new person with details
+# client requests with POST method. the method will grab person details from json body ofo post request
+@app.route("/person",methods=["POST"])
+def add_by_uuid():
+    new_person=request.json
+    if not new_person:
+        return{"message":"invalid input parameter"},422
+    # code to validate new_person ommited
+    try:
+        data.append(new_person)
+    except NameError:
+        return {"message":"data not defined"},500
+    return{"message":f"{new_person['id']}"},200
+
+
+'''
+Flask return HTML page with 404 error if you make an invalid request to server.
+But you want to return a JSON response for all invalid requests
+the method will return message API not found with 404 whenever client requests a URL that does not lead to any endpoints
+defined by server
+'''
+# did not get expected output need to work on this
+@app.errorhandler(404)
+def api_not_found(e):
+        #return jsonify(error=str(e)),404
+       return{"message":"api not found"},404
 
 
 # if __name__=="__main__":
