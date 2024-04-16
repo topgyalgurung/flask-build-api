@@ -1,6 +1,8 @@
 from flask import Flask, make_response, request, jsonify
+# for rendering static and dynamic HTML pages
 from flask import render_template 
-# for rendering static and dynamic HTML pages 
+
+from Maths.mathematics import summation, subtraction, multiplication
 
 app = Flask(__name__)
 # app=Flask("My First Application")
@@ -64,12 +66,15 @@ data = [
 ]
 
 @app.route("/") # default is GET request 
-def index():
-    return "Hello world "
+def render_index_page():
+    return render_template('sample.html')
 
 @app.route('/sample')
 def getSampleHtml():
     return render_template('sample.html')
+@app.route('/sum')
+def sum_route():
+    num1=float(request.)
 
 # first method send custom HTTP code with a tuple 
 @app.route("/content")
