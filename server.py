@@ -72,9 +72,13 @@ def render_index_page():
 @app.route('/sample')
 def getSampleHtml():
     return render_template('sample.html')
-@app.route('/sum')
+
+@app.route("/sum")
 def sum_route():
-    num1=float(request.)
+    num1=float(request.args.get('num1'))
+    num2=float(request.args.get('num2'))
+    result=summation(num1,num2)
+    return str(result)
 
 # first method send custom HTTP code with a tuple 
 @app.route("/content")
@@ -177,5 +181,5 @@ def api_not_found(e):
 
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=8080,debug=True)
 
